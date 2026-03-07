@@ -1,0 +1,414 @@
+.app-main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    background-color: #1a1a24;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.drum-rack-container {
+    display: flex;
+    flex-direction: column;
+    background: #232530;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    border: 1px solid #3a3f55;
+    width: 100%;
+    max-width: 850px;
+    margin: auto;
+}
+
+.drum-rack-container h2 {
+    margin: 0;
+    color: #eeeeee;
+    font-weight: 600;
+    text-align: left;
+    letter-spacing: 0.5px;
+}
+
+.rack-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.page-btn {
+    background: #2a2d3c;
+    border: 1px solid #3e445b;
+    color: #8a8f9c;
+    padding: 6px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.page-btn:hover {
+    background: #323748;
+    color: #c9ccd6;
+}
+
+.page-btn.active {
+    background: #2196F3;
+    border-color: #64B5F6;
+    color: #fff;
+}
+
+.drum-rack-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 16px;
+    aspect-ratio: 1;
+}
+
+/* Drum Pad Styling */
+.drum-pad {
+    background: #2a2d3c;
+    border: 2px solid #3e445b;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.05), inset 0 -4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.drum-pad:hover {
+    border-color: #58648e;
+    background: #323748;
+}
+
+.drum-pad.drag-over {
+    border-color: #4CAF50;
+    background: rgba(76, 175, 80, 0.15);
+}
+
+.drum-pad.loaded {
+    border-color: #2196F3;
+    box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.1), inset 0 -4px 10px rgba(33, 150, 243, 0.2);
+}
+
+.drum-pad.loaded:hover {
+    border-color: #64B5F6;
+    background: #2f3e58;
+}
+
+.pad-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #8a8f9c;
+    font-weight: bold;
+}
+
+.pad-number {
+    color: #c9ccd6;
+}
+
+.midi-note {
+    font-family: monospace;
+}
+
+.pad-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.sample-name {
+    font-size: 0.9rem;
+    color: #eee;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+.pad-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-top: 8px;
+}
+
+.pad-controls label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.pad-controls input[type="checkbox"] {
+    accent-color: #2196F3;
+    margin: 0 8px 0 0;
+    cursor: pointer;
+}
+
+.offset-input {
+    width: 55px;
+    background: #1e202b;
+    border: 1px solid #4a5168;
+    color: #eee;
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 0.75rem;
+    text-align: right;
+    font-family: monospace;
+}
+
+.offset-input:focus {
+    outline: none;
+    border-color: #2196F3;
+}
+
+/* Audio Edit Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.audio-edit-modal {
+    background: #232530;
+    padding: 32px;
+    border-radius: 12px;
+    border: 1px solid #3a3f55;
+    width: 95%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.audio-edit-modal header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #3a3f55;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.preview-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #00b894;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.preview-btn:hover {
+    background: #009678;
+}
+
+.preview-btn:active {
+    background: #00765c;
+    transform: translateY(1px);
+}
+
+.audio-edit-modal h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #e2e4ed;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #fff;
+}
+
+.edit-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.edit-sections h4 {
+    margin: 0 0 12px 0;
+    color: #8a8f9c;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.controls-grid label {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.85rem;
+    color: #ccc;
+    gap: 4px;
+}
+
+.controls-grid input[type="number"] {
+    background: #1e202b;
+    border: 1px solid #4a5168;
+    color: #fff;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.checkbox-label {
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.adsr-graph-container {
+    background: #1e202b;
+    border: 1px solid #3a3f55;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.edit-pad-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+.edit-pad-btn:disabled {
+    background: #4a5168;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.edit-pad-btn:hover:not(:disabled) {
+    background: #45a049;
+}
+
+/* Waveform Editor */
+.waveform-editor {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    background: #1e202b;
+    border: 1px solid #3a3f55;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    user-select: none;
+    touch-action: none;
+}
+
+.waveform-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.waveform-placeholder {
+    width: 100%;
+    height: 150px;
+    background: #1e202b;
+    border: 1px dashed #4a5168;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    transform: translateX(-50%);
+    cursor: ew-resize;
+    z-index: 10;
+}
+
+.handle::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+}
+
+.handle-start::after {
+    background: #2196F3;
+}
+
+.handle-end::after {
+    background: #F44336;
+}
+
+.loop-handle::after {
+    background: #4CAF50;
+    width: 4px;
+    border-radius: 2px;
+}
+
+.handle:hover::after,
+.handle:active::after {
+    background: #FFF;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
